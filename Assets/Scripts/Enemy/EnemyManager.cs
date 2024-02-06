@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
@@ -9,6 +10,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private float _limitXN;
     [SerializeField] private float _speed;
     [SerializeField] private GameObject _bullet;
+    [SerializeField] private float _limitY;
     public bool _isGoingRight = true;
     private float _shootCounter;
 
@@ -56,15 +58,26 @@ public class EnemyManager : MonoBehaviour
             {
                 ChangeDirections();
             }
+
+            if(enemy.transform.position.y <= _limitY)
+            {
+               GameManager.Instance.Die();
+            }
         }
 
-        if(_shootCounter < 1)
+       
+        if (_shootCounter < 1)
         {
             _shootCounter += Time.deltaTime;
         }else if(_shootCounter >= 1) 
         {
             Shoot();
             _shootCounter = 0;
+        }
+
+        if (_EnemyList.Any())
+        {
+            Debug.Log("ganaste");
         }
     }
 
@@ -73,7 +86,6 @@ public class EnemyManager : MonoBehaviour
         int index = Random.Range(0, _EnemyList.Count);
         GameObject enemy = _EnemyList[index];
 
-        Debug.Log(enemy.name);
         Instantiate(_bullet, enemy.transform.position, enemy.transform.rotation);
     }
     

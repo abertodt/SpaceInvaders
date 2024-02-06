@@ -5,13 +5,13 @@ using UnityEngine.Events;
 
 public class Bullet : MonoBehaviour
 {
-    public bool _enemyBullet;
+    public bool EnemyBullet;
     [SerializeField] private float _speed;
 
     // Update is called once per frame
     void Update()
     {
-        if (!_enemyBullet)
+        if (!EnemyBullet)
         {
             transform.position += transform.up * _speed * Time.deltaTime;
         }
@@ -25,17 +25,11 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!_enemyBullet && collision.tag == "Enemy") 
+        if (!EnemyBullet && collision.tag == "Enemy") 
         {
             Destroy(gameObject);
             EnemyManager.Instance.RemoveFromList(collision.gameObject);
             Destroy(collision.gameObject);
-        }
-
-        if(_enemyBullet && collision.tag == "Player")
-        {
-            Destroy(gameObject);
-            Debug.Log("au");
         }
     }
 }
