@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _textLifes;
     [SerializeField] private GameObject _gameOverText;
     [SerializeField] private GameObject _restartText;
+    [SerializeField] private GameObject _youWinText;
     [SerializeField] private TextMeshProUGUI _pointsText;
 
     private bool _courutineStarted;
@@ -59,6 +60,31 @@ public class GameManager : MonoBehaviour
         {
             _courutineStarted = false;
             RestartGame();
+        }
+    }
+
+    public void Win()
+    {
+        if (!_courutineStarted) StartCoroutine(YouWin());
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _courutineStarted = false;
+            RestartGame();
+        }
+    }
+
+    private IEnumerator YouWin()
+    {
+        _courutineStarted = true;
+        while (_courutineStarted)
+        {
+            _youWinText.SetActive(true);
+            _restartText.SetActive(true);
+            yield return new WaitForSeconds(0.8f);
+            _youWinText.SetActive(false);
+            _restartText.SetActive(false);
+            yield return new WaitForSeconds(0.8f);
         }
     }
 

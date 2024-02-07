@@ -47,37 +47,40 @@ public class EnemyManager : MonoBehaviour
 
         }
 
-        foreach (GameObject enemy in _EnemyList)
-        {
-            if (enemy.transform.position.x > _limitXP)
-            {
-                ChangeDirections();
-            }
-
-            if (enemy.transform.position.x < _limitXN)
-            {
-                ChangeDirections();
-            }
-
-            if(enemy.transform.position.y <= _limitY)
-            {
-               GameManager.Instance.Die();
-            }
-        }
-
-       
-        if (_shootCounter < 1)
-        {
-            _shootCounter += Time.deltaTime;
-        }else if(_shootCounter >= 1) 
-        {
-            Shoot();
-            _shootCounter = 0;
-        }
-
         if (_EnemyList.Any())
         {
-            Debug.Log("ganaste");
+            foreach (GameObject enemy in _EnemyList)
+            {
+                if (enemy.transform.position.x > _limitXP)
+                {
+                    ChangeDirections();
+                }
+
+                if (enemy.transform.position.x < _limitXN)
+                {
+                    ChangeDirections();
+                }
+
+                if (enemy.transform.position.y <= _limitY)
+                {
+                    GameManager.Instance.Die();
+                }
+            }
+
+
+            if (_shootCounter < 1)
+            {
+                _shootCounter += Time.deltaTime;
+            }
+            else if (_shootCounter >= 1)
+            {
+                Shoot();
+                _shootCounter = 0;
+            }
+        }
+        else
+        {
+            GameManager.Instance.Win();
         }
     }
 
@@ -116,7 +119,7 @@ public class EnemyManager : MonoBehaviour
     public void RemoveFromList(GameObject _enemy)
     {
         _EnemyList.Remove(_enemy);
-        _speed += 0.1f;
+        _speed += 0.2f;
     }
 
 }

@@ -13,12 +13,11 @@ public class TakeDamage : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameObject col = collision.gameObject;
-
-        if(collision.tag == "Bullet" && col.GetComponent<Bullet>().EnemyBullet)
+        if(collision.tag == "Bullet" && collision.gameObject.GetComponent<Bullet>().EnemyBullet)
         {
             GameManager.Instance.Lifes--;
             transform.position = _startingPosition;
+            Destroy(collision.gameObject);
         }
     }
 }
